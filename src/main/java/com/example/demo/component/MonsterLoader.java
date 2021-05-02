@@ -31,7 +31,6 @@ public class MonsterLoader {
     private final HomunculusSkillRepository homunculusSkillRepository;
 
     public void loadAll() {
-        monsterRepository.deleteAll();
         List<Monster> monsters = new ArrayList<>();
         String next = "https://swarfarm.com/api/v2/monsters/";
         RestTemplate restTemplate = new RestTemplate();
@@ -107,5 +106,9 @@ public class MonsterLoader {
         } while (next != null);
 
         monsterRepository.saveAll(monsters);
+    }
+
+    public void preload() {
+        monsterRepository.deleteAll();
     }
 }

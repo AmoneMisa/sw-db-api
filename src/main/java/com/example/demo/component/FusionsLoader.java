@@ -27,7 +27,6 @@ public class FusionsLoader {
     private final MonsterRepository monsterRepository;
 
     public void loadAll() {
-        fusionsRepository.deleteAll();
         List<Fusion> fusions = new ArrayList<>();
         String next = "https://swarfarm.com/api/v2/fusions/";
         RestTemplate restTemplate = new RestTemplate();
@@ -66,5 +65,9 @@ public class FusionsLoader {
         } while (next != null);
 
         fusionsRepository.saveAll(fusions);
+    }
+
+    public void preload() {
+        fusionsRepository.deleteAll();
     }
 }

@@ -19,7 +19,6 @@ public class EffectLoader {
     private final EffectRepository effectRepository;
 
     public void loadAll() {
-        effectRepository.deleteAll();
         List<Effect> skillEffects = new ArrayList<>();
         String next = "https://swarfarm.com/api/v2/skill-effects/";
         RestTemplate restTemplate = new RestTemplate();
@@ -44,5 +43,9 @@ public class EffectLoader {
         } while (next != null);
 
         effectRepository.saveAll(skillEffects);
+    }
+
+    public void preload() {
+        effectRepository.deleteAll();
     }
 }

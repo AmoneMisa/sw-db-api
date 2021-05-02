@@ -19,7 +19,6 @@ public class LeaderSkillLoader {
     private final LeaderSkillRepository leaderSkillRepository;
 
     public void loadAll() {
-        leaderSkillRepository.deleteAll();
         List<LeaderSkill> leaderSkills = new ArrayList<>();
         String next = "https://swarfarm.com/api/v2/leader-skills/";
         RestTemplate restTemplate = new RestTemplate();
@@ -45,5 +44,9 @@ public class LeaderSkillLoader {
         } while (next != null);
 
         leaderSkillRepository.saveAll(leaderSkills);
+    }
+
+    public void preload() {
+        leaderSkillRepository.deleteAll();
     }
 }

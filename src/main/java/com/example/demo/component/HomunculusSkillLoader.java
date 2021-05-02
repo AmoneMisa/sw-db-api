@@ -29,7 +29,6 @@ public class HomunculusSkillLoader {
     private final SkillRepository skillRepository;
 
     public void loadAll() {
-        homunculusSkillRepository.deleteAll();
         List<HomunculusSkill> homunculusSkills = new ArrayList<>();
         String next = "https://swarfarm.com/api/v2/homunculus-skills/";
         RestTemplate restTemplate = new RestTemplate();
@@ -68,5 +67,9 @@ public class HomunculusSkillLoader {
         } while (next != null);
 
         homunculusSkillRepository.saveAll(homunculusSkills);
+    }
+
+    public void preload() {
+        homunculusSkillRepository.deleteAll();
     }
 }
