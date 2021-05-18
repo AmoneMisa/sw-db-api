@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 public class SkillEffectDto {
-    private Integer effect;
+    private EffectDto effect;
     private Boolean aoe;
     private Boolean singleTarget;
     private Boolean selfEffect;

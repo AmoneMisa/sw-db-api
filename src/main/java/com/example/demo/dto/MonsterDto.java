@@ -27,11 +27,11 @@ public class MonsterDto {
     private Integer resistance;
     private Integer accuracy;
     private Boolean isFusionFood;
-    private Integer awakensFrom;
-    private Integer awakensTo;
+    private MonsterItemDto awakensFrom;
+    private MonsterItemDto awakensTo;
     private Boolean isHomuncul;
     private Integer skillUpsCount;
-    private Integer leaderSkill;
-    private List<Integer> skills;
-    private List<Integer> homunculusSkills;
+    private LeaderSkillDto leaderSkill;
+    private List<SkillDto> skills;
+    private List<HomunculusSkillDto> homunculusSkills;
 }

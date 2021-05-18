@@ -44,6 +44,7 @@ public class LeaderSkillLoader {
         } while (next != null);
 
         leaderSkillRepository.saveAll(leaderSkills);
+        log.info("Loaded leader skills");
     }
 
     public void preload() {

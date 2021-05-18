@@ -67,6 +67,7 @@ public class HomunculusSkillLoader {
         } while (next != null);
 
         homunculusSkillRepository.saveAll(homunculusSkills);
+        log.info("Loaded homunculus skills");
     }
 
     public void preload() {

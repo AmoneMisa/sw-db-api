@@ -34,8 +34,10 @@ public class Monster {
     private Integer resistance;
     private Integer accuracy;
     private Boolean isFusionFood;
-    private Integer awakensFrom;
-    private Integer awakensTo;
+    @ManyToOne
+    private Monster awakensFrom;
+    @ManyToOne
+    private Monster awakensTo;
     private Boolean isHomuncul;
     private Integer skillUpsCount;
     @ManyToOne

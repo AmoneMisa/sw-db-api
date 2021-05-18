@@ -43,6 +43,7 @@ public class EffectLoader {
         } while (next != null);
 
         effectRepository.saveAll(skillEffects);
+        log.info("Loaded effects");
     }
 
     public void preload() {

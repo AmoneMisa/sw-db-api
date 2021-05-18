@@ -65,6 +65,7 @@ public class FusionsLoader {
         } while (next != null);
 
         fusionsRepository.saveAll(fusions);
+        log.info("Loaded fusions");
     }
 
     public void preload() {

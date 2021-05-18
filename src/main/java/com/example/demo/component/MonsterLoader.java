@@ -15,9 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,6 +32,9 @@ public class MonsterLoader {
         List<Monster> monsters = new ArrayList<>();
         String next = "https://swarfarm.com/api/v2/monsters/";
         RestTemplate restTemplate = new RestTemplate();
+        Map<Integer, Monster> monstersById = new HashMap<>();
+        Map<Integer, Integer> awakenFromByMonster = new HashMap<>();
+        Map<Integer, Integer> awakenToByMonster = new HashMap<>();
 
         do {
             log.info(next);
@@ -61,8 +62,8 @@ public class MonsterLoader {
                 monster.setAccuracy(element.get("accuracy").intValue());
                 monster.setIsFusionFood(element.get("fusion_food").booleanValue());
                 monster.setIsHomuncul(element.get("homunculus").booleanValue());
-                monster.setAwakensFrom(element.get("awakens_from").intValue());
-                monster.setAwakensTo(element.get("awakens_to").intValue());
+                awakenFromByMonster.put(monster.getId(), element.get("awakens_from").intValue());
+                awakenToByMonster.put(monster.getId(), element.get("awakens_to").intValue());
                 monster.setSkillUpsCount(element.get("skill_ups_to_max").intValue());
 
                 if (!element.get("leader_skill").isNull()) {
@@ -84,7 +85,6 @@ public class MonsterLoader {
                 if (skillIds.size() != skills.size()) {
                     log.warn("The size of skill's aren't similar: {}, ids: {}", skills.size(), skillIds.size());
                 }
-
                 monster.setSkills(skills);
 
                 Iterable<JsonNode> homunculusSkillsNodes = () -> element.get("homunculus_skills").elements();
@@ -99,6 +99,7 @@ public class MonsterLoader {
 
                 monster.setHomunculusSkills(homunculusSkills);
 
+                monstersById.put(monster.getId(), monster);
                 monsters.add(monster);
             }
 
@@ -106,6 +107,17 @@ public class MonsterLoader {
         } while (next != null);
 
         monsterRepository.saveAll(monsters);
+
+        awakenFromByMonster.forEach((monsterId, awakenFrom) -> {
+            monstersById.get(monsterId).setAwakensFrom(awakenFrom != null ? monstersById.get(awakenFrom) : null);
+        });
+
+        awakenToByMonster.forEach((monsterId, awakenTo) -> {
+            monstersById.get(monsterId).setAwakensTo(awakenTo != null ? monstersById.get(awakenTo) : null);
+        });
+
+        monsterRepository.saveAll(monsters);
+        log.info("Loaded monsters");
     }
 
     public void preload() {

@@ -7,10 +7,7 @@ import com.example.demo.dto.RequestSearchSkillEffectDto;
 import com.example.demo.model.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.ListJoin;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class MonsterSpecifications {
@@ -99,19 +96,19 @@ public class MonsterSpecifications {
             String filterAttribute = request.getAttribute();
 
             if (filterAttribute != null) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(join.get("attribute"), filterAttribute));
+                predicate = criteriaBuilder.and(predicate, equal(criteriaBuilder, join.get("attribute"), filterAttribute));
             }
 
             String filterArea = request.getArea();
 
             if (filterArea != null) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(join.get("area"), filterArea));
+                predicate = criteriaBuilder.and(predicate, equal(criteriaBuilder, join.get("area"), filterArea));
             }
 
             String filterElement = request.getElement();
 
             if (filterElement != null) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(join.get("element"), filterElement));
+                predicate = criteriaBuilder.and(predicate, equal(criteriaBuilder, join.get("element"), filterElement));
             }
 
             Integer filterAmount = request.getAmount();
@@ -158,8 +155,6 @@ public class MonsterSpecifications {
     private static Predicate buildSkillEffectPredicate(RequestSearchSkillEffectDto request, ListJoin<Skill, SkillEffect> root, CriteriaBuilder criteriaBuilder) {
         Predicate predicate = criteriaBuilder.conjunction();
 
-
-        // skill effect fields
         Boolean filterAoe = request.getAoe();
 
         if (filterAoe != null) {
@@ -247,10 +242,14 @@ public class MonsterSpecifications {
         String filterName = request.getName();
 
         if (filterName != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("name"), filterName));
+            predicate = criteriaBuilder.and(predicate, equal(criteriaBuilder, root.get("name"), filterName));
         }
 
         return predicate;
+    }
+
+    private static Predicate equal(CriteriaBuilder criteriaBuilder, Path<String> path, String value) {
+        return criteriaBuilder.equal(criteriaBuilder.lower(path), value.toLowerCase());
     }
 
 }

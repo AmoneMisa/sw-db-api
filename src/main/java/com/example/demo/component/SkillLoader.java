@@ -103,6 +103,7 @@ public class SkillLoader {
         } while (next != null);
 
         skillRepository.saveAll(skills);
+        log.info("Loaded skills");
     }
 
     public void preload() {

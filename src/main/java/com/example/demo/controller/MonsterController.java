@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.component.MonsterLoader;
 import com.example.demo.component.mapper.MonsterMapper;
-import com.example.demo.dto.MonsterDto;
-import com.example.demo.dto.RequestSearchLeaderSkillDto;
-import com.example.demo.dto.RequestSearchMonsterDto;
-import com.example.demo.dto.RequestSearchSkillDto;
+import com.example.demo.dto.*;
 import com.example.demo.model.Monster;
 import com.example.demo.repository.MonsterRepository;
 import com.example.demo.util.MonsterSpecifications;
@@ -28,9 +25,9 @@ public class MonsterController {
     private final MonsterMapper monsterMapper;
 
     @GetMapping
-    public Page<MonsterDto> getAll(Pageable pageable) {
+    public Page<MonsterItemDto> getAll(Pageable pageable) {
         return monsterRepository.findAll(pageable)
-                .map(monsterMapper::toDto);
+                .map(monsterMapper::toItemDto);
     }
 
     @GetMapping("/{id}")
@@ -41,7 +38,7 @@ public class MonsterController {
     }
 
     @PostMapping("/search")
-    public Page<MonsterDto> searchAll(@RequestBody RequestSearchMonsterDto request, Pageable pageable) {
+    public Page<MonsterItemDto> searchAll(@RequestBody RequestSearchMonsterDto request, Pageable pageable) {
         Specification<Monster> specification = Specification.where(null);
         String filterName = request.getName();
 
@@ -170,7 +167,7 @@ public class MonsterController {
         }
 
         return monsterRepository.findAll(specification, pageable)
-                .map(monsterMapper::toDto);
+                .map(monsterMapper::toItemDto);
     }
 
     @GetMapping("/load")
