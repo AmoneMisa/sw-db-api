@@ -29,6 +29,7 @@ public class RequestSearchMonsterDto {
     private Integer accuracy;
     private Boolean isFusionFood;
     private Boolean isHomuncul;
+    private Boolean source;
     private RequestSearchLeaderSkillDto leaderSkill;
     private List<RequestSearchSkillDto> skills;
 }

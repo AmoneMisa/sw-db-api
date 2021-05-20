@@ -34,6 +34,7 @@ public class Monster {
     private Integer resistance;
     private Integer accuracy;
     private Boolean isFusionFood;
+    private Boolean source;
     @ManyToOne
     private Monster awakensFrom;
     @ManyToOne

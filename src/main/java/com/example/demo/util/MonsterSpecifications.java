@@ -83,6 +83,10 @@ public class MonsterSpecifications {
         return SpecificationUtil.equals("isHomuncul", homuncul);
     }
 
+    public static Specification<Monster> source(Boolean source) {
+        return SpecificationUtil.equals("source", source);
+    }
+
     public static Specification<Monster> equalsType(String type) {
         return SpecificationUtil.equals("type", type);
     }

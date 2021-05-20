@@ -154,6 +154,12 @@ public class MonsterController {
             specification = specification.and(MonsterSpecifications.fusionFood(fusionFood));
         }
 
+       Boolean source = request.getSource();
+
+        if (source != null) {
+            specification = specification.and(MonsterSpecifications.source(source));
+        }
+
         RequestSearchLeaderSkillDto leaderSkill = request.getLeaderSkill();
 
         if (leaderSkill != null) {

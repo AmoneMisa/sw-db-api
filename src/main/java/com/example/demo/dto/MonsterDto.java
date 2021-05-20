@@ -27,6 +27,7 @@ public class MonsterDto {
     private Integer resistance;
     private Integer accuracy;
     private Boolean isFusionFood;
+    private Boolean source;
     private MonsterItemDto awakensFrom;
     private MonsterItemDto awakensTo;
     private Boolean isHomuncul;

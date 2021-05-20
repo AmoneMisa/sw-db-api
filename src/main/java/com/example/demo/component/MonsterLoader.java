@@ -62,6 +62,14 @@ public class MonsterLoader {
                 monster.setAccuracy(element.get("accuracy").intValue());
                 monster.setIsFusionFood(element.get("fusion_food").booleanValue());
                 monster.setIsHomuncul(element.get("homunculus").booleanValue());
+
+                Iterable <JsonNode> sources = () -> element.get("source").elements();
+                if (StreamSupport.stream(sources.spliterator(), false).count() > 0) {
+                    monster.setSource(true);
+                } else {
+                    monster.setSource(false);
+                }
+
                 awakenFromByMonster.put(monster.getId(), element.get("awakens_from").intValue());
                 awakenToByMonster.put(monster.getId(), element.get("awakens_to").intValue());
                 monster.setSkillUpsCount(element.get("skill_ups_to_max").intValue());
