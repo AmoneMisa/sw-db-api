@@ -153,6 +153,45 @@ public class MonsterSpecifications {
             }
         }
 
+        Boolean filterAoe = request.getAoe();
+
+        if (filterAoe != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("aoe"), filterAoe));
+        }
+
+        Boolean filterPassive = request.getPassive();
+
+        if (filterPassive != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("passive"), filterPassive));
+        }
+
+        Integer filterCooltime = request.getCooltime();
+
+        if (filterCooltime != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("cooltime"), filterCooltime));
+        }
+
+        Integer filterHits = request.getHits();
+
+        if (filterHits != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("hits"), filterHits));
+        }
+
+        Integer filterSlot = request.getSlot();
+
+        if (filterSlot != null) {
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("slot"), filterSlot));
+        }
+
+        List<String> filtersScalesWith = request.getScalesWith();
+
+        if (filtersScalesWith != null) {
+            for (String filterScalesWith : filtersScalesWith) {
+                ListJoin<Skill, String> scalesWithJoin = root.joinList("scalesWith");
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(scalesWithJoin, filterScalesWith));
+            }
+        }
+
         return predicate;
     }
 
