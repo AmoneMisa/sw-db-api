@@ -8,6 +8,7 @@ import com.example.demo.repository.MonsterRepository;
 import com.example.demo.util.MonsterSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -142,19 +143,19 @@ public class MonsterController {
             specification = specification.and(MonsterSpecifications.accuracy(accuracy));
         }
 
-       Boolean homuncul = request.getIsHomuncul();
+        Boolean homuncul = request.getIsHomuncul();
 
         if (homuncul != null) {
             specification = specification.and(MonsterSpecifications.homuncul(homuncul));
         }
 
-       Boolean fusionFood = request.getIsFusionFood();
+        Boolean fusionFood = request.getIsFusionFood();
 
         if (fusionFood != null) {
             specification = specification.and(MonsterSpecifications.fusionFood(fusionFood));
         }
 
-       Boolean source = request.getSource();
+        Boolean source = request.getSource();
 
         if (source != null) {
             specification = specification.and(MonsterSpecifications.source(source));
