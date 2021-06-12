@@ -10,6 +10,7 @@ public class SpecificationUtil {
     public static <T> Specification<T> equals(String fieldName, Integer value) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(fieldName).as(Integer.class), value);
     }
+
     public static <T> Specification<T> equals(String fieldName, Boolean value) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(fieldName).as(Boolean.class), value);
     }

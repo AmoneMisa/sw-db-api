@@ -52,7 +52,17 @@ public class MonsterSpecifications {
     }
 
     public static Specification<Monster> equalsName(String name) {
-        return SpecificationUtil.equals("name", name);
+        return (root, query, criteriaBuilder) -> {
+            query.distinct(true);
+            Join<Monster, Monster> awakensFrom = root.join("awakensFrom", JoinType.LEFT);
+
+            String queryName = String.format("%%%s%%", name.toLowerCase().replace("%", "\\%"));
+
+            return criteriaBuilder.or(
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), queryName, '\\'),
+                    criteriaBuilder.like(criteriaBuilder.lower(awakensFrom.get("name")), queryName, '\\')
+            );
+        };
     }
 
     public static Specification<Monster> equalsElement(String element) {
@@ -258,13 +268,13 @@ public class MonsterSpecifications {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("damage"), filterDamage));
         }
 
-       Integer filterChance = request.getChance();
+        Integer filterChance = request.getChance();
 
         if (filterChance != null) {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("chance"), filterChance));
         }
 
-       Integer filterQuantity = request.getQuantity();
+        Integer filterQuantity = request.getQuantity();
 
         if (filterQuantity != null) {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("quantity"), filterQuantity));
