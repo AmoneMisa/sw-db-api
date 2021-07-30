@@ -14,8 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/load")
 public class LoadController {
-    @Value( "${sw-db.load-password}" )
-    private final String loadPassword;
+    @Value("${sw-db.load-password}")
+    private String loadPassword;
     private final DataLoader dataLoader;
 
     @GetMapping
